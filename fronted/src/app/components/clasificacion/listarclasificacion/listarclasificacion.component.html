@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="title-container"><h1 class="title">Lista de Clasificaciones</h1></div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef> Código </th>
+          <td mat-cell *matCellDef="let element"> {{element.idClasificacion}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Clasificacion </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombreClasificacion}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="accion01">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button aria-label="Añadir" [routerLink]="['ediciones', element.idClasificacion]">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </td></ng-container
+          >
+          <ng-container matColumnDef="accion02">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-raised-button color="warn" (click)="eliminar(element.idClasificacion)">
+                Eliminar
+              </button>
+            </td>
+            </ng-container
+          >
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>         
+</div>

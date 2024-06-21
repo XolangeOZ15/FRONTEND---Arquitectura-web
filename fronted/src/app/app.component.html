@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" *ngIf="verificar()">
+  <button mat-button [routerLink]="['/homes']">
+    <mat-icon>home</mat-icon>Home
+  </button>
+  <button mat-button [matMenuTriggerFor]="menuClasificacion" *ngIf="isAdmin()">
+    <mat-icon>menu</mat-icon>clasificacion
+  </button>
+  <button
+    mat-button
+    [matMenuTriggerFor]="menuAlmacen" *ngIf="isSupervisor()">
+    <mat-icon>menu</mat-icon>Almacen
+  </button>
+  <button mat-button [matMenuTriggerFor]="menuSalir">Usuario</button>
+</mat-toolbar>
+
+  <mat-menu #menuClasificacion="matMenu">
+    <button mat-menu-item routerLink="/clasificaciones">Listar</button>
+    <button mat-menu-item routerLink="/clasificaciones/nuevo">Registrar</button>
+  </mat-menu>
+  <mat-menu #menuAlmacen="matMenu">
+    <button mat-menu-item routerLink="/almacenes">Listar</button>
+    <button mat-menu-item routerLink="/almacenes/nuevo">Registrar</button>
+  </mat-menu>
+  <mat-menu #menuSalir="matMenu">
+    <button mat-menu-item routerLink="/login" (click)="cerrar()">
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+    <button mat-menu-item>
+      Rol:
+      <span>{{ role }}</span>
+    </button>
+  </mat-menu>
+  
+  <router-outlet></router-outlet>

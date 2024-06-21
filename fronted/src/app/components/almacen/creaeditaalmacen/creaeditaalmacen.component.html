@@ -1,0 +1,37 @@
+<div class="title-container"><h1 class="title">Registro de Almacenes</h1>
+</div>
+<div class="container" style="text-align: center">
+  <form [formGroup]="form" (submit)="aceptar()" class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Capacidad Almacen:</mat-label>
+      <input matInput placeholder="Capacidad del almacen" formControlName="c1" />
+      <mat-error *ngIf="form.get('c1')?.hasError('required')"
+        >La capacidad es obligatorio.</mat-error
+      >
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+      <mat-label>Direccion:</mat-label>
+      <input matInput placeholder="Direccion del edificio" formControlName="c2" />
+      <mat-error *ngIf="form.get('c2')?.hasError('required')"
+        >La direccion es obligatorio.</mat-error
+      >
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-full-width">
+        <mat-label>Clasificacion</mat-label>
+        <mat-select formControlName="c3">
+          <mat-option *ngFor="let c of listaClasificacion" [value]="c.idClasificacion">
+            {{c.nombreClasificacion}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('c3')?.hasError('required')"
+        >La clasificacion es obligatorio.</mat-error>            
+      </mat-form-field>
+    <br />
+    <button mat-raised-button color="primary">Aceptar</button>
+    <button mat-raised-button color="warn" routerLink="/almacenes">
+      Cancelar
+    </button>
+  </form>
+</div>
