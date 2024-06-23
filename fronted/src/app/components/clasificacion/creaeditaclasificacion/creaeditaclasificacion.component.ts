@@ -18,7 +18,8 @@ import { ClasificacionService } from '../../../services/clasificacion.service';
     MatInputModule,
     RouterLink,
     NgIf,
-    CommonModule
+    CommonModule,
+    MatButtonModule
   ],
   templateUrl: './creaeditaclasificacion.component.html',
   styleUrl: './creaeditaclasificacion.component.css'
@@ -45,14 +46,14 @@ export class CreaeditaclasificacionComponent implements OnInit {
       this.Init()
     });
     this.form = this.formBuilder.group({
-      codigo1: [''],
+      codigo: [''],
       nombre: ['', Validators.required],
     });
   }
 
   aceptar(): void {
     if (this.form.valid) {
-      this.clasificacion.idClasificacion = this.form.value.codigo1;
+      this.clasificacion.idClasificacion = this.form.value.codigo;
       this.clasificacion.nombreClasificacion = this.form.value.nombre;
       if (this.edicion) {
         this.cS.update(this.clasificacion).subscribe(() => {
@@ -76,7 +77,7 @@ export class CreaeditaclasificacionComponent implements OnInit {
     if (this.edicion){
     this.cS.listId(this.id).subscribe((data)=>{
       this.form = new FormGroup({
-        codigo1: new FormControl(data.idClasificacion),
+        codigo: new FormControl(data.idClasificacion),
         nombre: new FormControl(data.nombreClasificacion)
       });
     });

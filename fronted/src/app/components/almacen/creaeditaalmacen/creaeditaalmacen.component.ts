@@ -35,9 +35,9 @@ export class CreaeditaalmacenComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   almacen: Almacen = new Almacen();
   listaClasificacion: Clasificacion[] = [];
-  id:number=0;
-  edicion:boolean=false;
-  
+  id: number = 0;
+  edicion: boolean = false;
+
   constructor(
     private cS: ClasificacionService,
     private router: Router,
@@ -52,6 +52,7 @@ export class CreaeditaalmacenComponent implements OnInit {
       this.Init()
     });
     this.form = this.formBuilder.group({
+      codigo: [''],
       c1: ['', Validators.required],
       c2: [
         '',
@@ -59,7 +60,7 @@ export class CreaeditaalmacenComponent implements OnInit {
           Validators.required,
           Validators.min(1),
           Validators.max(300),
-          
+
         ],
       ],
       c3: [
@@ -70,30 +71,34 @@ export class CreaeditaalmacenComponent implements OnInit {
       this.listaClasificacion = data;
     });
   }
-   aceptar(): void {
+  aceptar(): void {
     if (this.form.valid) {
+      this.almacen.idAlmacen = this.form.value.codigo;
       this.almacen.capacidadAlmacen = this.form.value.c1;
       this.almacen.direccionAlmacen = this.form.value.c2;
       this.almacen.clasificacion.idClasificacion = this.form.value.c3;
-      if(this.edicion){
-      this.aS.update(this.almacen).subscribe((data) => {
-        this.aS.list().subscribe((data) => {
-          this.aS.setList(data);
+      if (this.edicion) {
+        this.aS.update(this.almacen).subscribe(() => {
+          this.aS.list().subscribe((data) => {
+            this.aS.setList(data);
+          });
         });
-      });}
+      }
       else {
         this.aS.insert(this.almacen).subscribe((data) => {
           this.aS.list().subscribe((data) => {
             this.aS.setList(data);
           });
         });
-      this.router.navigate(['almacenes']);
-    }}
+        this.router.navigate(['almacenes']);
+      }
+    }
   }
   Init() {
-    if (this.edicion){
-      this.aS.listId(this.id).subscribe((data)=>{
+    if (this.edicion) {
+      this.aS.listId(this.id).subscribe((data) => {
         this.form = new FormGroup({
+          codigo: new FormControl(data.idAlmacen),
           c1: new FormControl(data.capacidadAlmacen),
           c2: new FormControl(data.direccionAlmacen),
           c3: new FormControl(data.clasificacion.idClasificacion)
